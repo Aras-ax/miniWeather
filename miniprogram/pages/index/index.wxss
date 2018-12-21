@@ -1,0 +1,163 @@
+/**index.wxss**/
+
+page {
+  background: #4390bc5d;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: #fff;
+}
+
+.userinfo-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background-size: cover;
+  background-color: white;
+}
+.userinfo-greet {
+  margin-left: 10rpx;
+  font-size: 28rpx;
+}
+
+.avatar-bar{
+  position: absolute;
+  height: 100rpx;
+  background-color: transparent;
+  left: 20rpx;
+  top: 20rpx;
+  display:flex;
+  align-items:center;
+}
+
+.userinfo-avatar:after {
+  border: none;
+}
+
+.bd-bottom{
+  border-bottom: 1px solid rgba(255, 255, 255, .5);
+}
+/** 当天信息 **/
+.todayinfo{
+  height: 440rpx;
+  box-sizing: border-box;
+  padding-top: 80rpx;
+  text-align: center;
+  font-size: 28rpx;
+  position: relative;
+}
+
+.info-place{
+  font-size: 56rpx;
+  padding: 14rpx 0 0;
+}
+
+.info-temp{
+  font-size: 80rpx;
+  margin-top: 12rpx;
+}
+
+.temp{
+  font-size: 140rpx;
+  line-height: 1;
+}
+
+.temp-du{
+  top:-40rpx;
+  position:relative;
+}
+
+.info-bottom{
+  position:absolute;
+  bottom:0;
+  left:0;
+  height:80rpx;
+  font-size:34rpx;
+  width: 100%;
+  text-align: left;
+}
+
+.info-bt-week{
+  flex-grow:1;
+  padding-left: 40rpx;
+}
+
+.info-bt-temp{
+  width: 140rpx;
+  padding-right: 40rpx;
+}
+
+
+.info-bt-down{
+  float: right;
+  color: rgba(255, 255, 255, .5);
+}
+
+/** 未来24小时天气 **/
+.hourinfo{
+  height: 200rpx;
+}
+
+.hour-container{
+  width: 1350rpx;
+}
+
+.hour-item, .day-item{
+  text-align:center;
+  line-height:44rpx;
+  flex: 1;
+}
+
+.dayinfo{
+  padding: 6rpx 0;
+}
+
+
+/** 其他信息 **/
+.info-sum{
+  line-height: 38rpx;
+  padding: 24rpx 40rpx;
+}
+
+.info-other{
+  border-top: 1px solid rgba(255, 255, 255, .5);
+  padding: 0 40rpx;
+}
+
+.info-other-item{
+  width:50%;
+  display:inline-block;
+  padding: 4rpx;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(255, 255, 255, .5);
+}
+
+.info-other-item.max{
+  width: 100%;
+}
+
+.item-title{
+  display: block;
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, .5);
+}
+
+.item-text{
+  font-size: 50rpx;
+}
+
+.max .item-text{
+  font-size: 32rpx;
+}
+
+.footer{
+  height:40rpx;
+  margin-top: -1px;
+  line-height:40rpx;
+  font-size:12px;
+  position: relative;
+  z-index: 11;
+  text-align:center;
+  color:#fff;
+  border-top: 1px solid rgba(255, 255, 255, .5);
+}

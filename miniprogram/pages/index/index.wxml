@@ -1,0 +1,125 @@
+<!--index.wxml-->
+<view class="container">
+
+  <!-- 用户 openid -->
+  <view class="userinfo">
+    <button 
+      open-type="getUserInfo" 
+      bindgetuserinfo="onGetUserInfo"
+      wx:if="{{!avatarUrl}}"
+    >获取用户头像等信息</button>
+    <view class='avatar-bar'>
+      <image src='{{avatarUrl}}' class="userinfo-avatar"></image>
+      <text class='userinfo-greet'>{{gretting}}</text>
+    </view>
+  </view>
+
+  <!-- 当天信息 -->
+  <view class="todayinfo bd-bottom">
+    <view class='info-place'>{{locatePlace}}</view>
+    <view class='info-cond'>
+      <image class='icon' src="{{nowData.iconUrl}}"/>
+      <text>{{nowData.cond}}</text>
+    </view>
+    <view class='info-temp'>
+      <text class='temp'>{{nowData.tmp}}</text>
+      <text class='temp-du'>°</text>
+    </view>
+    <view class='info-bottom flex-row'>
+      <text class='info-bt-week'>{{dateMess.weekDay}}</text>
+      <view class='info-bt-temp'>
+        <text class='info-bt-up'>{{nowData.tmpMax}}</text>
+        <text class='info-bt-down'>{{nowData.tmpMin}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 24小时天气信息 -->
+  <scroll-view scroll-x class="hourinfo bd-bottom bg">
+      <view class="flex-row hour-container">
+        <view class='hour-item'>
+          <view>上午10</view>
+          <view>晴</view>
+          <view>23°</view>
+          <view>微风</view>
+        </view>
+        <view class='hour-item'>
+          <view>上午10</view>
+          <view>晴</view>
+          <view>23°</view>
+          <view>微风</view>
+        </view>
+        <view class='hour-item flex'>
+          <view>上午10</view>
+          <view>晴</view>
+          <view>23°</view>
+          <view>微风</view>
+        </view>
+        <view class='hour-item'>
+          <view>上午10</view>
+          <view>晴</view>
+          <view>23°</view>
+          <view>微风</view>
+        </view>
+        <view class='hour-item'>
+          <view>上午10</view>
+          <view>晴</view>
+          <view>23°</view>
+          <view>微风</view>
+        </view>
+        <view class='hour-item'>
+          <view>上午10</view>
+          <view>晴</view>
+          <view>23°</view>
+          <view>微风</view>
+        </view>
+        <view class='hour-item'>
+          <view>上午10</view>
+          <view>晴</view>
+          <view>23°</view>
+          <view>微风</view>
+        </view>
+        <view class='hour-item'>
+          <view>上午10</view>
+          <view>晴</view>
+          <view>23°</view>
+          <view>微风</view>
+        </view>
+      </view>
+  </scroll-view>
+
+  <!-- 近三天天气信息 -->
+  <view class="dayinfo bd-bottom flex-row bg">
+    <view wx:for="{{dayData}}" wx:key="item.date" class='day-item'>
+      <view>{{item.weekDay}}</view>
+      <view>{{item.date}}</view>
+      <view>日出{{item.sunRaise}}</view>
+      <view><image class='icon' src="{{item.condDay}}"></image></view>
+      <view>{{item.tmp}}</view>
+      <view><image class='icon' src="{{item.condNight}}"></image></view>
+      <view>日落{{item.sunSet}}</view>
+      <view>风速{{item.wind}}级</view>
+    </view>
+  </view>
+  
+  <!-- 其他辅助信息 -->
+  <view class="otherinfo bg">
+    <view class='info-sum'>{{summary}}</view>
+    <view class='info-other'>
+      <view wx:for="{{detailList}}" wx:key="item.field" class='info-other-item flex'>
+        <label class='item-title'>{{item.text}}</label>
+        <text class='item-text'>{{nowData[item.field]}}</text>
+      </view>
+      <view wx:for="{{lifeStyle}}" wx:key="item.field" class='info-other-item max flex'>
+        <label class='item-title'>{{item.text}}</label>
+        <text class='item-text'>{{lifeStyleData[item.field]}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 版权信息 -->
+  <view class='footer bg'>
+  陌上 & API和风天气
+  </view>
+
+</view>

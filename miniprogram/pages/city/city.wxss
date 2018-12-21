@@ -1,0 +1,134 @@
+/**index.wxss**/
+
+page {
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+
+.font-main{
+  color: #333;
+  font-size: 32prx;
+}
+
+.font-light{
+  color: #7f7f7f;
+  font-size: 28rpx;
+}
+
+.search-bar{
+  height: 72rpx;
+  padding-left: 24rpx;
+  width: 100%;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #f6f6f6;
+  z-index: 1;
+}
+
+.input-search{
+  flex: 1;
+  color: #333;
+  border-radius: 36rpx;
+  padding-left: 40rpx;
+  background-color: #ececec;
+}
+
+.search-icon{
+  position: absolute;
+  top: 50%;
+  left: 34rpx;
+  transform: translate3d(0,-50%,0);
+  background: transparent url(https://6d6f-moshang-7c0ba0-1258326249.tcb.qcloud.la/weather/img/search.png) left center no-repeat;
+  width: 28rpx;
+  height: 28rpx;
+  background-size: 28rpx 28rpx;
+}
+
+.input-placeholder{
+  color: #bbb;
+  font-size: 24rpx;
+}
+
+.btn-cancel{
+  width: 120rpx;
+  text-align: center;
+  display: block;
+  color: #49a3f8;
+  font-size: 32rpx;
+}
+
+.scroll-contsiner{
+  height: 100%;
+  padding-top: 72rpx;
+}
+
+.locate{
+  flex: 1;
+  text-align: left;
+  padding-left: 60rpx;
+  background: transparent url(https://6d6f-moshang-7c0ba0-1258326249.tcb.qcloud.la/weather/img/locate.png) 28rpx center no-repeat;
+  background-size: 32rpx 32rpx;
+}
+
+.btn-locate{
+  color: #49a3f8;
+  font-size: 32rpx;
+  width: 200rpx;
+  padding-right: 60rpx;
+}
+
+.card{
+  background-color: #fff;
+  margin-bottom: 12rpx;
+}
+
+.title{
+  height: 88rpx;
+  line-height: 88rpx;
+  padding-left: 24rpx;
+}
+
+.item{
+  background-color: #ececec;
+  height: 72rpx;
+  line-height: 72rpx;
+  width:  200rpx;
+  display: inline-block;
+  margin:16rpx;
+}
+
+.content{
+  padding-bottom: 12rpx;
+  text-align: center;
+}
+
+.list-content{
+  padding-left: 24rpx;
+}
+
+.city-item{
+  line-height: 88rpx;
+  padding-left: 24rpx;
+  height: 88rpx;
+  border-bottom: 1px solid #eee;
+  box-sizing: border-box;
+}
+
+.nav-bar{
+  background-color: rgba(0, 0, 0, .1);
+  width: 28rpx;
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+}
+
+.nav-item{
+  margin: 0 4rpx;
+  font-size: 28rpx;
+  color: #7f7f7f;
+}

@@ -1,0 +1,33 @@
+/**app.wxss**/
+page{
+  font-size: 14px;    
+  font-family: "PingFang SC","Source Sans Pro","Helvetica Neue","Microsoft Yahei",Helvetica,Arial,"Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei",sans-serif;
+}
+
+.container {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+} 
+
+.flex{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flex-row{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.bg{
+  background-color: rgba(0, 0, 0, .05);
+}
+
+.icon{
+  width:48rpx;
+  height:48rpx;
+  vertical-align:middle;
+}
