@@ -16,8 +16,8 @@
 
   <!-- 当天信息 -->
   <view class="todayinfo bd-bottom">
-    <view class='info-place'>{{locatePlace}}</view>
-    <view class='info-cond'>
+    <view class='info-place' bindtap="changeLocation">{{locatePlace}}</view>
+    <view class='info-cond' bindtap="changeLocation">
       <image class='icon' src="{{nowData.iconUrl}}"/>
       <text>{{nowData.cond}}</text>
     </view>

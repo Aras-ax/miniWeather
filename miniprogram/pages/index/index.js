@@ -73,12 +73,21 @@ Page({
 
   // 获取位置信息
   async getLocation(){
+    if (app.globalData.location) {
+      this.setData({
+        location: app.globalData.location,
+        locatePlace: app.globalData.locatePlace
+      });
+      return;
+    }
+
     await api.getLocation().then((res) => {
       let { latitude, longitude} = res;
       // 设置数据
       this.setData({
         location: `${longitude},${latitude}`
       });
+      app.globalData.location = this.data.location;
 
       // 根据位置信息请求天气和对应的地区描述
       this.getLocateName({ latitude, longitude });
@@ -94,6 +103,7 @@ Page({
       this.setData({
         locatePlace: `${res.city}${res.district}`
       });
+      app.globalData.locatePlace = this.data.locatePlace;
     }).catch((res) => {
       console.log(res);
     });
@@ -183,5 +193,11 @@ Page({
 
   formHourData(data){
     console.log(data);
+  },
+  
+  changeLocation() {
+    wx.navigateTo({
+      url: '../city/city'
+    });
   }
 })

@@ -43,5 +43,10 @@ module.exports = {
     { field: 'uv', text: '紫外线指数' },
     { field: 'air', text: '空气污染扩散条件指数' }
   ],
-  cityGroup: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z']
+  cityGroup: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z'],
+  hotCity: ['北京市', '深圳市', '上海市', '广州市', '杭州市', '南京市', '景德镇市', '天津市', '西安市'],
+  STORAGE_KEY:{
+    INVITED_CITY: 'MOSHANG_INVITED_CITYS',
+    CITY_LIST: 'MOSHANG_CITYS'
+  }
 };

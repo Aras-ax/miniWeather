@@ -3,70 +3,58 @@
   <!-- 位置搜索框 -->
   <view class="search-bar flex-row">
     <label class="search-icon" for="inputSearch"></label>
-    <input placeholder="输入城市名或拼音" id="inputSearch" placeholder-class="input-placeholder" class="input-search"/>
+    <input placeholder="输入城市名或拼音" id="inputSearch" placeholder-class="input-placeholder" class="input-search" bindfocus="focus" bindconfirm="search" bindinput="limitSearch"/>
     <text class="btn-cancel" bindtap="cancelSearch">取消</text>
   </view>
-  <scroll-view scroll-y class="scroll-contsiner">
+  <scroll-view scroll-y="{{true}}" class="scroll-contsiner" scroll-into-view="{{toView}}" bindscroll="scroll">
     <!-- 当前定位 -->
-    <view class="locate-bar">
+    <view class="locate-bar city-group" data-group="#" id="city_top">
       <view class="title font-light">当前定位</view>
       <view class="content flex-row">
-        <view class="font-mian locate">深圳市</view>
-        <text class="btn-locate">重新定位</text>
+        <view class="font-mian locate" bindtap="selectCity" data-name="{{locatePlace}}" data-location="{{location}}">{{locatePlace}}</view>
+        <text class="btn-locate" bindtap="getLocation">重新定位</text>
       </view>
     </view>
     
     <!-- 历史访问城市 -->
-    <view class="history-bar">
+    <view class="history-bar" wx:if="{{invitedCity.length > 0}}">
       <view class="title font-light">历史访问城市</view>
-      <view class="content">
-        <view class="item font-main">深圳市</view>
-        <view class="item font-main">上海市</view>
-        <view class="item font-main">北京市</view>
+      <view class="content" bindtap="selectCity">
+        <view class="item font-main" wx:for="{{invitedCity}}" wx:key="{{item}}" data-name="{{item}}">{{item}}</view>
       </view>
     </view>
     
     <!-- 热门城市 -->
     <view class="hot-bar">
       <view class="title font-light">热门城市</view>
-      <view class="content">
-        <view class="item font-main">深圳市</view>
-        <view class="item font-main">上海市</view>
-        <view class="item font-main">北京市</view>
-        <view class="item font-main">杭州市</view>
-        <view class="item font-main">广州市</view>
-        <view class="item font-main">天津市</view>
-        <view class="item font-main">南京市</view>
-        <view class="item font-main">景德镇市</view>
-        <view class="item font-mian">丽江市</view>
+      <view class="content" bindtap="selectCity">
+        <view class="item font-main" wx:for="{{hotCity}}" wx:key="{{item}}" data-name="{{item}}">{{item}}</view>
       </view>
     </view>
 
     <!-- 城市列表 -->
-    <view class="city-list">
+    <!-- <view class="city-list"> -->
       <block class="list-item" wx:for="{{cityGroup}}" wx:key="item">
-        <view class="title font-light">{{item}}</view>
-        <view class="list-content">
-          <view class="city-item" wx:for="{{cityList[item]}}" wx:key="city.pinyin" wx:for-item="city">{{city.name}}</view>
+        <view id="city_{{item}}" class="title font-light city-group" data-group="{{item}}">{{item}}</view>
+        <view class="list-content" bindtap="selectCity">
+          <view class="city-item" wx:for="{{cityList[item]}}" wx:key="{{city.pinyin}}" wx:for-item="city" data-name="{{city.fullname}}" data-location="{{item.location}}">{{city.name}}</view>
         </view>
       </block>
-    </view>
+    <!-- </view> -->
   </scroll-view>
   
   <!-- 搜索内容 -->
-  <view class="search-list" style='display:none;'>
-    <view class="search-item">深圳市</view>
-    <view class="search-item">上海市</view>
-    <view class="search-item">北京市</view>
-    <view class="search-item">杭州市</view>
-    <view class="search-item">广州市</view>
-    <view class="search-item">天津市</view>
-    <view class="search-item">南京市</view>
-    <view class="search-item">景德镇市</view>
+  <scroll-view scroll-y="1" class="search-list" hidden="{{!show}}">
+  <view class="search-container">
+    <view class="search-item flex" wx:for="{{searchList}}" wx:key="{{item.id}}" data-name="{{item.title}}" data-location="{{item.lng}},{{item.lat}}">
+      <view class="search-title">{{item.title}}</view>
+      <text class='search-content'>{{item.address}}</text>
+    </view>
   </view>
+  </scroll-view>
 
   <!-- 右侧导航 -->
   <view class="nav-bar flex">
-    <view class="nav-item" wx:for="{{fileterList}}" wx:key="item">{{item}}</view>
+    <view class="nav-item {{scrollItem === item ? 'active' : ''}}" wx:for="{{fileterList}}" wx:key="{{item}}" bindtap="scrollTo" data-item="{{item}}">{{item}}</view>
   </view>
 </view>

@@ -52,10 +52,23 @@ function getTimeText(){
   }
 }
 
+// 缓冲节流
+function throttling(fn, delay){
+  let lastTime = 0;
+  return function(){
+    let now = new Date().getTime();
+    if (now - lastTime >= delay) {
+      fn.apply(this, arguments);
+      lastTime = now;
+    }
+  }
+}
+
 
 module.exports = {
   transDate,
   getWeekDay,
   getDate,
-  getTimeText
+  getTimeText,
+  throttling
 }

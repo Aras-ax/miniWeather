@@ -5,6 +5,12 @@ page {
   display: flex;
   flex-direction: column;
   justify-content: left;
+  height: 100%;
+}
+
+.container{
+  height: 100%;
+  overflow: hidden;
 }
 
 .font-main{
@@ -13,7 +19,7 @@ page {
 }
 
 .font-light{
-  color: #7f7f7f;
+  color: #7f7f7f; 
   font-size: 28rpx;
 }
 
@@ -32,15 +38,17 @@ page {
 .input-search{
   flex: 1;
   color: #333;
-  border-radius: 36rpx;
-  padding-left: 40rpx;
+  border-radius: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  padding-left: 60rpx;
   background-color: #ececec;
 }
 
 .search-icon{
   position: absolute;
   top: 50%;
-  left: 34rpx;
+  left: 44rpx;
   transform: translate3d(0,-50%,0);
   background: transparent url(https://6d6f-moshang-7c0ba0-1258326249.tcb.qcloud.la/weather/img/search.png) left center no-repeat;
   width: 28rpx;
@@ -64,6 +72,8 @@ page {
 .scroll-contsiner{
   height: 100%;
   padding-top: 72rpx;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .locate{
@@ -122,6 +132,7 @@ page {
   background-color: rgba(0, 0, 0, .1);
   width: 28rpx;
   position: fixed;
+  z-index: 11;
   right: 0;
   top: 50%;
   transform: translate3d(0, -50%, 0);
@@ -131,4 +142,46 @@ page {
   margin: 0 4rpx;
   font-size: 28rpx;
   color: #7f7f7f;
+}
+
+.nav-item.active{
+  color: #49a3f8;
+}
+
+.search-list{
+  position: fixed;
+  z-index: 12;
+  top: 72rpx;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.search-item{
+  height: 120rpx;
+  border-bottom: 1px solid #ececec;
+  box-sizing: border-box;
+  position: relative;
+  text-align: left;
+  align-items: middle;
+  justify-content: left;
+  padding: 20rpx 0;
+}
+
+.search-title{
+  font-size: 32rpx;
+  color: #333;
+  width: 100%;
+}
+
+.search-content{
+  color: #666;
+  font-size: 28rpx;
+  width: 100%;
+}
+
+.search-container{
+  padding-left: 24rpx;
+  background-color: #fff;
+  height: auto;
 }

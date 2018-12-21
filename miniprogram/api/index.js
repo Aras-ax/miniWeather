@@ -31,7 +31,7 @@ const getLocation = function() {
 // 获取城市列表
 function getCityList() {
   // 从缓存取
-  let data = wx.getStorageSync('MOSHANG_CITYS')
+  let data = wx.getStorageSync(config.STORAGE_KEY.CITY_LIST)
   if (data) {
     return Promise.resolve(data);
   }
@@ -41,11 +41,9 @@ function getCityList() {
           success(res) {
             res = sortCity(res.result[1]);
 
-
-
             // 写入缓存
             wx.setStorage({
-              key: 'MOSHANG_CITYS',
+              key: config.STORAGE_KEY.CITY_LIST,
               data: res
             });
             resolve(res);
@@ -60,12 +58,14 @@ function getCityList() {
 function sortCity(data){
   let outData = {};
   data.forEach(item => {
-    let {pinyin, ...attr} = item;
+    let {pinyin,location, ...attr} = item;
     pinyin = pinyin.join('').toUpperCase();
+    location = `${location.lng},${location.lat}`
     let key = pinyin[0];
     if(outData[key]){
       outData[key].push({
         pinyin,
+        location,
         ...attr
       });
     }else{
@@ -104,6 +104,48 @@ function reverseGeocoder(option) {
   })
 }
 
+// 获取访问过的城市列表
+function getInvitedCity() {
+  return new Promise((resolve, reject) => {
+    wx.getStorage({
+      key: config.STORAGE_KEY.INVITED_CITY,
+      success(res) {
+        resolve(res);
+      },
+      fail(err){
+        reject(err);
+      }
+    });
+  });
+}
+
+// 通过关键字搜索 
+function getSuggestion(keyword){
+  return new Promise((resolve, reject) => {
+    qqMapWX.getSuggestion({
+      keyword,
+      success(res) {
+        resolve(res.data);
+      },
+      fail(err) {
+        reject(err)
+      }
+    });
+  });
+}
+
+// 记录历史访问的城市
+function setInvitedCity(city) {
+  city = [...new Set(city)];
+  if(city.length > 6){
+    city.length = 6;
+  }
+  wx.setStorage({
+    key: config.STORAGE_KEY.INVITED_CITY,
+    data: city
+  });
+}
+
 function wxRequest(option, url = config.api.weather) {
     return new Promise((resolve, reject) => {
         wx.request({
@@ -138,7 +180,10 @@ function getHourly(option) {
 module.exports = {
   getLocation,
   getCityList,
+  getSuggestion,
   reverseGeocoder,
   getWeather,
-  getHourly
+  getHourly,
+  getInvitedCity,
+  setInvitedCity
 }
