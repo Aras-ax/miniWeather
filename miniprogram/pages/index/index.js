@@ -7,12 +7,8 @@ const regeneratorRuntime = require('../../libs/regenerator.js');
 
 Page({
   data: {
-    avatarUrl: './user-unlogin.png',
-    loadInfo: false,
-    reload: false,
-    userInfo: {},
     logged: false,
-    backStyle: 'sunshine',
+    backStyle: '',
     takeSession: false,
     gretting: '',
     location: '', //位置信息,用于请求数据信息(格式:经度,纬度)
@@ -30,38 +26,9 @@ Page({
   },
 
   onShow: function() {
-    if (!wx.cloud) {
-      wx.redirectTo({
-        url: '../chooseLib/chooseLib',
-      })
-      return;
-    }
-
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                loadInfo: true,
-                reload: false,
-                userInfo: res.userInfo,
-                gretting: `${res.userInfo.nickName}, ${util.getTimeText()}好`
-              })
-            },
-            fail(){
-              this.setData({
-                reload: true
-              });
-            }
-          })
-        }
-      }
-    });
-
+    this.setData({
+      gretting: util.getTimeText() + '好'
+    })
     this.init();
   },
 
@@ -75,17 +42,6 @@ Page({
     wx.stopPullDownRefresh();
   },
 
-  onGetUserInfo: function(e) {
-    if (!this.logged && e.detail.userInfo) {
-      this.setData({
-        avatarUrl: e.detail.userInfo.avatarUrl,
-        userInfo: e.detail.userInfo,
-        loadInfo: true,
-        reload: false,
-        gretting: `${res.userInfo.nickName}, ${util.getTimeText()}好`
-      })
-    }
-  },
   // 初始化操作
   async init(){
     await this.getLocation();
@@ -117,6 +73,10 @@ Page({
       this.getLocateName({ latitude, longitude });
     }).catch((res) => {
       console.log(res);
+      this.setData({
+        locatePlace: '北京市',
+        location: '北京市'
+      });
     });
   },
 

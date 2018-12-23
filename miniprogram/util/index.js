@@ -12,6 +12,8 @@ const DAY_TIME = {
 function transDate(date){
   date = date || new Date();
   if (Object.prototype.toString.call(date) !== '[object Date]') {
+
+    date = date.replace(/\-/g, '/');
     date = new Date(date);
   }
   return date;

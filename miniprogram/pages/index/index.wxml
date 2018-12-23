@@ -3,15 +3,9 @@
   <view class='bg-view {{backStyle}}'></view>
   <!-- 用户 openid -->
   <view class="userinfo">
-    <button 
-      open-type="getUserInfo" 
-      bindgetuserinfo="onGetUserInfo"
-      wx:if="{{reload}}"
-      class="btn-load"
-    >获取用户头像等信息</button>
-    <view class="avatar-bar" wx:if="{{loadInfo}}">
-      <image src='{{avatarUrl}}' class="userinfo-avatar"></image>
-      <text class='userinfo-greet'>{{gretting}}</text>
+    <view class="avatar-bar">
+    <open-data type="userAvatarUrl" class="userinfo-avatar"/>
+    <open-data type="userNickName"/><text class='userinfo-greet'>，{{gretting}}</text>
     </view>
   </view>
 
@@ -92,7 +86,7 @@
 
   <!-- 版权信息 -->
   <view class='footer'>
-  ©️2018 陌上 & API 和风天气
+  ©2018 陌上 & API 和风天气
   </view>
 
 </view>
