@@ -110,7 +110,7 @@ function getInvitedCity() {
     wx.getStorage({
       key: config.STORAGE_KEY.INVITED_CITY,
       success(res) {
-        resolve(res);
+        resolve(JSON.parse(res.data));
       },
       fail(err){
         reject(err);
@@ -136,13 +136,22 @@ function getSuggestion(keyword){
 
 // 记录历史访问的城市
 function setInvitedCity(city) {
-  city = [...new Set(city)];
-  if(city.length > 6){
-    city.length = 6;
+
+  let newList = [], obj = {};
+  for(let i = 0, item; item= city[i++];){
+    if(!obj[item.locatePlace]){
+      obj[item.locatePlace] = 1;
+      newList.push(item);
+    }
+
+    if(newList.length === 6){
+      break;
+    }
   }
+
   wx.setStorage({
     key: config.STORAGE_KEY.INVITED_CITY,
-    data: city
+    data: JSON.stringify(newList) 
   });
 }
 

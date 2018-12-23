@@ -31,3 +31,47 @@ page{
   height:48rpx;
   vertical-align:middle;
 }
+
+.ellipsis{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.center{
+  text-align: center;
+  width: 100%;
+  padding: 48rpx 0;
+}
+
+/* 不同天气不同背景色 */
+/* 晴 */
+.sunshine {
+    background: -webkit-gradient(linear,0% 0,0% 100%,from(#50b2fb),to(#a6d4f6));
+    background: linear-gradient(top,#50b2fb,#a6d4f6)
+}
+
+/* 阴天，小雨*/
+.rain {
+    background: -webkit-gradient(linear,0% 0,0% 100%,from(#88a9ca),to(#bcd3e3));
+    background: linear-gradient(top,#88a9ca,#bcd3e3);
+    }
+
+/* 雾霾 */
+.smog, .smog-n {
+    background: -webkit-gradient(linear,0% 0,0% 100%,from(#999691),to(#c5c5c5));
+    background: linear-gradient(top,#999691,#c5c5c5)
+}
+
+/* 晴天晚上 */
+.sunshine-n{
+  background-image: -webkit-linear-gradient(top, #183259, rgb(52, 130, 186));
+  background-image: linear-gradient(top, #183259, rgb(52, 130, 186));
+}
+
+/* 阴天晚上 */
+.rain-n{
+  background-image: -webkit-linear-gradient(top, #485663, rgb(161, 184, 202));
+  background-image: linear-gradient(top, #485663, rgb(161, 184, 202));
+}
+  

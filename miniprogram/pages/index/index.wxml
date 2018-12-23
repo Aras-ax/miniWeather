@@ -1,14 +1,15 @@
 <!--index.wxml-->
 <view class="container">
-
+  <view class='bg-view {{backStyle}}'></view>
   <!-- 用户 openid -->
   <view class="userinfo">
     <button 
       open-type="getUserInfo" 
       bindgetuserinfo="onGetUserInfo"
-      wx:if="{{!avatarUrl}}"
+      wx:if="{{reload}}"
+      class="btn-load"
     >获取用户头像等信息</button>
-    <view class='avatar-bar'>
+    <view class="avatar-bar" wx:if="{{loadInfo}}">
       <image src='{{avatarUrl}}' class="userinfo-avatar"></image>
       <text class='userinfo-greet'>{{gretting}}</text>
     </view>
@@ -23,7 +24,7 @@
     </view>
     <view class='info-temp'>
       <text class='temp'>{{nowData.tmp}}</text>
-      <text class='temp-du'>°</text>
+      <text class='temp-du' hidden="{{nowData.tmp === undefined}}">°</text>
     </view>
     <view class='info-bottom flex-row'>
       <text class='info-bt-week'>{{dateMess.weekDay}}</text>
@@ -35,91 +36,63 @@
   </view>
 
   <!-- 24小时天气信息 -->
-  <scroll-view scroll-x class="hourinfo bd-bottom bg">
-      <view class="flex-row hour-container">
-        <view class='hour-item'>
-          <view>上午10</view>
-          <view>晴</view>
-          <view>23°</view>
-          <view>微风</view>
-        </view>
-        <view class='hour-item'>
-          <view>上午10</view>
-          <view>晴</view>
-          <view>23°</view>
-          <view>微风</view>
-        </view>
-        <view class='hour-item flex'>
-          <view>上午10</view>
-          <view>晴</view>
-          <view>23°</view>
-          <view>微风</view>
-        </view>
-        <view class='hour-item'>
-          <view>上午10</view>
-          <view>晴</view>
-          <view>23°</view>
-          <view>微风</view>
-        </view>
-        <view class='hour-item'>
-          <view>上午10</view>
-          <view>晴</view>
-          <view>23°</view>
-          <view>微风</view>
-        </view>
-        <view class='hour-item'>
-          <view>上午10</view>
-          <view>晴</view>
-          <view>23°</view>
-          <view>微风</view>
-        </view>
-        <view class='hour-item'>
-          <view>上午10</view>
-          <view>晴</view>
-          <view>23°</view>
-          <view>微风</view>
-        </view>
-        <view class='hour-item'>
-          <view>上午10</view>
-          <view>晴</view>
-          <view>23°</view>
-          <view>微风</view>
-        </view>
+  <scroll-view scroll-x class="hourinfo bd-bottom">
+    <view hidden="{{hasLoadData}}">
+      <view class="center">24小时内天气信息加载中···</view>
+    </view>
+    <view hidden="{{!hasLoadData}}" class="flex-row hour-container">
+      <view wx:for="{{hourData}}" wx:key="{{index}}" class='hour-item'>
+        <view>{{item.time}}</view>
+        <view><image class='icon' src="{{item.icon}}"></image></view>
+        <view>{{item.tmp}}</view>
+        <view>{{item.wind}}</view>
       </view>
+    </view>
   </scroll-view>
 
-  <!-- 近三天天气信息 -->
-  <view class="dayinfo bd-bottom flex-row bg">
-    <view wx:for="{{dayData}}" wx:key="item.date" class='day-item'>
-      <view>{{item.weekDay}}</view>
-      <view>{{item.date}}</view>
-      <view>日出{{item.sunRaise}}</view>
-      <view><image class='icon' src="{{item.condDay}}"></image></view>
-      <view>{{item.tmp}}</view>
-      <view><image class='icon' src="{{item.condNight}}"></image></view>
-      <view>日落{{item.sunSet}}</view>
-      <view>风速{{item.wind}}级</view>
+  <!-- 近六天天气信息 -->
+  <scroll-view scroll-x class="dayinfo bd-bottom">
+    <view hidden="{{hasLoadData}}">
+      <view class="center">近几天天气信息加载中···</view>
     </view>
-  </view>
+    <view hidden="{{!hasLoadData}}" class="flex-row day-container">
+      <view hidden="{{!hasLoadData}}" wx:for="{{dayData}}" wx:key="item.date" class='day-item'>
+        <view>{{item.weekDay}}</view>
+        <view>{{item.date}}</view>
+        <view>日出{{item.sunRaise}}</view>
+        <view><image class='icon' src="{{item.condDay}}"></image></view>
+        <view>{{item.tmp}}</view>
+        <view><image class='icon' src="{{item.condNight}}"></image></view>
+        <view>日落{{item.sunSet}}</view>
+        <view>风速{{item.wind}}级</view>
+      </view>
+    </view>
+  </scroll-view>
   
   <!-- 其他辅助信息 -->
-  <view class="otherinfo bg">
-    <view class='info-sum'>{{summary}}</view>
-    <view class='info-other'>
-      <view wx:for="{{detailList}}" wx:key="item.field" class='info-other-item flex'>
-        <label class='item-title'>{{item.text}}</label>
-        <text class='item-text'>{{nowData[item.field]}}</text>
-      </view>
-      <view wx:for="{{lifeStyle}}" wx:key="item.field" class='info-other-item max flex'>
-        <label class='item-title'>{{item.text}}</label>
-        <text class='item-text'>{{lifeStyleData[item.field]}}</text>
+  <view class="otherinfo">
+    <view hidden="{{hasLoadData}}">
+      <view class="center">今天辅助信息加载中···</view>
+    </view>
+    
+    <view hidden="{{!hasLoadData}}">
+      <view class='info-sum'>{{summary}}</view>
+      <view class='info-other'>
+        <view wx:for="{{detailList}}" wx:key="item.field" class='info-other-item flex'>
+          <label class='item-title'>{{item.text}}</label>
+          <text class='item-text'>{{nowData[item.field]}}</text>
+        </view>
+        <view wx:for="{{lifeStyle}}" wx:key="item.field" class='info-other-item max flex'>
+          <label class='item-title'>{{item.text}}</label>
+          <text class='item-text'>{{lifeStyleData[item.field]}}</text>
+        </view>
       </view>
     </view>
   </view>
 
   <!-- 版权信息 -->
-  <view class='footer bg'>
-  陌上 & API和风天气
+  <view class='footer'>
+  ©️2018 陌上 & API 和风天气
   </view>
 
 </view>

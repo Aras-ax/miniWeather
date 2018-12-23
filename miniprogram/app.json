@@ -1,13 +1,14 @@
 {
   "pages": [
-    "pages/city/city",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/city/city"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
     "navigationBarTitleText": "天气大侠",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
   }
 }

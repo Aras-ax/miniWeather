@@ -3,8 +3,8 @@ const CLOUD_FILE_BASE_PATH = 'https://6d6f-moshang-7c0ba0-1258326249.tcb.qcloud.
 
 module.exports = {
   DEAULT_PLACE: '北京',
-  WEATHER_KEY: 'HE1812190947531536-1E3',
-  MAP_key: 'N77BZ-XFL2R-LQNWL-WQLCM-2TFJF-UGFPO-EDF',
+  WEATHER_KEY: 'HE1812190947531536',
+  MAP_key: 'N77BZ-XFL2R-LQNWL-WQLCM-2TFJF-UGFPO',
   CLOUD_FILE_BASE_PATH: CLOUD_FILE_BASE_PATH,
   // 天气信息请求接口地址
   api: {
@@ -22,7 +22,23 @@ module.exports = {
       sunset: 'https://free-api.heweather.net/s6/solar/sunrise-sunset'
   },
   // 不同时间段的背景色，深夜，早上，上午，中午，下午，傍晚，晚上
-  bgColor: {},
+  bgColor: {
+    sun: {
+      color: '#50b2fb',
+      colorn: '#183259',
+      css: 'sunshine'
+    },
+    rain: {
+      color: '#88a9ca',
+      colorn: '#485663',
+      css: 'rain'
+    },
+    smog: {
+      color: '#999691',
+      colorn: '#999691',
+      css: 'smog'
+    }
+  },
   detailList: [
     { field: 'sunRaise', text: '日出' },
     { field: 'sunSet', text: '日落' },

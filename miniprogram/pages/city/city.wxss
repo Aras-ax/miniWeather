@@ -87,7 +87,7 @@ page {
 .btn-locate{
   color: #49a3f8;
   font-size: 32rpx;
-  width: 200rpx;
+  width: 160rpx;
   padding-right: 60rpx;
 }
 
@@ -109,11 +109,17 @@ page {
   width:  200rpx;
   display: inline-block;
   margin:16rpx;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 0 24rpx;
 }
+
 
 .content{
   padding-bottom: 12rpx;
-  text-align: center;
+  text-align: left;
+  width: 696rpx;
+  margin: 0 auto;
 }
 
 .list-content{

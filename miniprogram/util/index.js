@@ -32,6 +32,16 @@ function getDate(date) {
   };
 }
 
+function getHour(date){
+  date = transDate(date);
+
+  let hour = date.getHours();
+  if(hour > 12){
+    return `下午${hour - 12}时`;
+  }
+  return `上午${hour}时`;
+}
+
 // 获取问候语
 function getTimeText(){
   let hour = new Date().getHours();
@@ -70,5 +80,6 @@ module.exports = {
   getWeekDay,
   getDate,
   getTimeText,
+  getHour,
   throttling
 }

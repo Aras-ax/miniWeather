@@ -8,16 +8,20 @@ const regeneratorRuntime = require('../../libs/regenerator.js');
 Page({
   data: {
     avatarUrl: './user-unlogin.png',
+    loadInfo: false,
+    reload: false,
     userInfo: {},
     logged: false,
+    backStyle: 'sunshine',
     takeSession: false,
-    gretting: '早上好',
+    gretting: '',
     location: '', //位置信息,用于请求数据信息(格式:经度,纬度)
     locatePlace: '', //位置描述信息
     hourData: [], //未来逐三小时天气信息
     dayData:[], //最近三天天气信息
     nowData: {}, //当前的天气信息
     lifeStyleData: {},
+    hasLoadData: false,
     summary: '',
     itemList: '',
     dateMess: {},
@@ -42,10 +46,16 @@ Page({
             success: res => {
               this.setData({
                 avatarUrl: res.userInfo.avatarUrl,
+                loadInfo: true,
+                reload: false,
                 userInfo: res.userInfo,
-                gretting: `${res.userInfo.nickName}, ${util.getTimeText()}好`,
-                dateMess: util.getDate()
+                gretting: `${res.userInfo.nickName}, ${util.getTimeText()}好`
               })
+            },
+            fail(){
+              this.setData({
+                reload: true
+              });
             }
           })
         }
@@ -55,19 +65,33 @@ Page({
     this.init();
   },
 
+  onPullDownRefresh() {
+    this.getWeatherData();
+    // wx.showNavigationBarLoading()
+  },
+
+  stopRefresh() {
+    wx.hideNavigationBarLoading();
+    wx.stopPullDownRefresh();
+  },
+
   onGetUserInfo: function(e) {
     if (!this.logged && e.detail.userInfo) {
       this.setData({
         avatarUrl: e.detail.userInfo.avatarUrl,
         userInfo: e.detail.userInfo,
-        gretting: `${res.userInfo.nickName}, ${util.getTimeText()}好`,
-        dateMess: util.getDate()
+        loadInfo: true,
+        reload: false,
+        gretting: `${res.userInfo.nickName}, ${util.getTimeText()}好`
       })
     }
   },
   // 初始化操作
   async init(){
     await this.getLocation();
+    this.setData({
+      dateMess: util.getDate()
+    });
     this.getWeatherData();
   },
 
@@ -114,23 +138,23 @@ Page({
     await api.getWeather({
       location: this.data.location
     }).then((res) => {
+      this.stopRefresh();
+      this.setData({
+        hasLoadData: true
+      });
       res.HeWeather6 && this.formatData(res.HeWeather6[0]);
-    }).catch((res) => {
+      }).catch((res) => {
+      this.stopRefresh();
       console.log(res);
-    });
-
-    await api.getHourly({
-      location: this.data.location
-    }).then((res) => {
-      res.HeWeather6 && this.formHourData(res.HeWeather6[0]);
-    }).catch((res) => {
-      console.log(res);
+      this.getWeatherData();
     });
   },
 
   // 格式化数据为需要的数据类型 
   formatData(data){
+    this.setBgStyle(+data.now.cond_code);
     this.formatNowData(data);
+    this.formHourData(data.hourly);
     this.formatLifeStyle(data.lifestyle);
     this.formatDayData(data.daily_forecast);
   },
@@ -149,14 +173,20 @@ Page({
         sunRaise: todayData.sr,
         pop: `${todayData.pop}%`, // 降雨概率
         hum: `${data.now.hum}%`, // 湿度
-        wind: `${data.now.wind_dir} ${data.now.wind_spd}公里/时`,
+        wind: `${data.now.wind_dir}`,
         fl: `${data.now.fl}°`, //体感温度
         pcpn: `${data.now.pcpn}毫米`, //降雨量
         pres: `${data.now.pres}百帕`, //气压
         vis: `${data.now.vis}公里`, //能见度
         uv: todayData.uv_index //紫外线 
       },
-      summary: `今天：${todayData.cond_txt_d}，当前气温${data.now.tmp}°，最高气温${todayData.tmp_max}°。`
+      hourData: [{
+        time: '现在',
+        icon: `${config.CLOUD_FILE_BASE_PATH}${data.now.cond_code}.png`,
+        tmp: `${data.now.tmp}°`,
+        wind: data.now.wind_dir
+      }],
+      summary: `今天：${todayData.cond_txt_d}，当前气温${data.now.tmp}°，最高气温${todayData.tmp_max}°，风速${data.now.wind_spd}公里/小时。`
     });
   },
 
@@ -171,10 +201,14 @@ Page({
   },
 
   formatDayData(data){
-    let outdata = [];
-    data.forEach(item => {
+    let outData = [];
+    data.forEach((item, index) => {
+      if (index === 0) {
+        return true;
+      }
+
       let dateObj = util.getDate(item.date);
-      outdata.push({
+      outData.push({
         weekDay: dateObj.weekDay,
         date: dateObj.date,
         sunRaise: `${item.sr}`,
@@ -187,17 +221,66 @@ Page({
     });
 
     this.setData({
-      dayData: outdata
+      dayData: outData
     });
   },
 
   formHourData(data){
-    console.log(data);
+    let outData = this.data.hourData;
+
+    data.forEach(item => {
+      outData.push({
+        time: util.getHour(item.time),
+        icon: `${config.CLOUD_FILE_BASE_PATH}${item.cond_code}.png`,
+        tmp: `${item.tmp}°`,
+        wind: item.wind_dir
+      });
+    });
+
+    this.setData({
+      hourData: outData
+    });
   },
   
   changeLocation() {
     wx.navigateTo({
       url: '../city/city'
     });
+  },
+
+  setBgStyle(code){
+    let hour = new Date().getHours(),
+    isDayTime = hour >= 7 && hour <= 18,
+    bgObj = {};
+
+    if((code >= 100 && code <= 103) || (code >= 200 && code <= 204)){
+      bgObj = config.bgColor.sun;
+    }else if(code >= 500 && code <= 515){
+      bgObj = config.bgColor.smog;
+    }else{
+      bgObj = config.bgColor.rain;
+    }
+
+    this.setData({
+      backStyle: bgObj.css + (isDayTime ? '' : '-n')
+    });
+
+    this.setBackColor(isDayTime ? bgObj.color : bgObj.colorn);
+  },
+
+  setBackColor(color){
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: color,
+      animation: {
+        duration: 400,
+        timingFunc: 'easeIn'
+      }
+    });
+
+    wx.setBackgroundColor({
+      backgroundColor: color, // 窗口的背景色为白色
+      backgroundColorTop: color
+    })
   }
 })

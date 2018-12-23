@@ -3,8 +3,8 @@
   <!-- 位置搜索框 -->
   <view class="search-bar flex-row">
     <label class="search-icon" for="inputSearch"></label>
-    <input placeholder="输入城市名或拼音" id="inputSearch" placeholder-class="input-placeholder" class="input-search" bindfocus="focus" bindconfirm="search" bindinput="limitSearch"/>
-    <text class="btn-cancel" bindtap="cancelSearch">取消</text>
+    <input placeholder="输入城市名或拼音" id="inputSearch" value="{{searchkey}}" placeholder-class="input-placeholder" class="input-search" bindfocus="focus" bindconfirm="search" bindinput="limitSearch"/>
+    <text class="btn-cancel" bindtap="cancel">取消</text>
   </view>
   <scroll-view scroll-y="{{true}}" class="scroll-contsiner" scroll-into-view="{{toView}}" bindscroll="scroll">
     <!-- 当前定位 -->
@@ -20,7 +20,7 @@
     <view class="history-bar" wx:if="{{invitedCity.length > 0}}">
       <view class="title font-light">历史访问城市</view>
       <view class="content" bindtap="selectCity">
-        <view class="item font-main" wx:for="{{invitedCity}}" wx:key="{{item}}" data-name="{{item}}">{{item}}</view>
+        <view class="item font-main ellipsis" wx:for="{{invitedCity}}" wx:key="{{item.locatePlace}}" data-name="{{item.locatePlace}}" data-location="{{item.location}}">{{item.locatePlace}}</view>
       </view>
     </view>
     
@@ -44,11 +44,11 @@
   </scroll-view>
   
   <!-- 搜索内容 -->
-  <scroll-view scroll-y="1" class="search-list" hidden="{{!show}}">
+  <scroll-view scroll-y="1" class="search-list" hidden="{{!show}}" bindtap="cancel">
   <view class="search-container">
-    <view class="search-item flex" wx:for="{{searchList}}" wx:key="{{item.id}}" data-name="{{item.title}}" data-location="{{item.lng}},{{item.lat}}">
-      <view class="search-title">{{item.title}}</view>
-      <text class='search-content'>{{item.address}}</text>
+    <view class="search-item flex" wx:for="{{searchList}}" wx:key="{{item.id}}" data-name="{{item.title}}" data-location="{{item.lng}},{{item.lat}}" catchtap="selectCity">
+      <view class="search-title ellipsis">{{item.title}}</view>
+      <text class='search-content ellipsis'>{{item.address}}</text>
     </view>
   </view>
   </scroll-view>

@@ -17,6 +17,7 @@ Page({
     invitedCity: [],
     hotCity: config.hotCity,
     show: false,
+    searchkey:'',
     searchList: []
   },
   onShow() {
@@ -47,9 +48,8 @@ Page({
   // 获取历史访问过的城市列表
   getInvitedCity(){
     api.getInvitedCity().then(res => {
-      console.log(res);
       this.setData({
-        invitedCity: res.data
+        invitedCity: res
       });
     }).catch(err => {
       console.log(err);
@@ -126,16 +126,20 @@ Page({
   //选择城市
   selectCity(event){
     let target = event.target;
-    if(target.dataset && target.dataset.name){
-      let locatePlace = target.dataset.name;
-      this.setInvitedCity(locatePlace);
-
-      this.showWeather({
-        location: target.dataset.location || locatePlace,
-        locatePlace
-      });
+    if(target.dataset && !target.dataset.name){
+      target = event.currentTarget;
     }
+    let locatePlace = target.dataset.name,
+    data = {
+      location: target.dataset.location || locatePlace,
+      locatePlace
+    };
+
+    this.setInvitedCity(data);
+    this.showWeather(data);
   },
+
+
 
   // 设定已选择的城市，切换为天气显示界面
   showWeather(place) {
@@ -145,9 +149,9 @@ Page({
     //   delta: 1
     // });
 
-    wx.navigateTo({
-      url: '../index/index'
-    });
+    wx.navigateBack({
+      url: '/pages/index/index'
+    })
   },
 
   focus(){
@@ -176,5 +180,13 @@ Page({
 
   limitSearch: util.throttling(function(e){
     this.search(e);
-  }, 100)
+  }, 50),
+
+  cancel(){
+    this.setData({
+      show: false,
+      searchList: [],
+      searchkey: ''
+    })
+  }
 });
