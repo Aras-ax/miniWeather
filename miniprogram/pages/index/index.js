@@ -14,7 +14,7 @@ Page({
     location: '', //位置信息,用于请求数据信息(格式:经度,纬度)
     locatePlace: '', //位置描述信息
     hourData: [], //未来逐三小时天气信息
-    dayData:[], //最近三天天气信息
+    dayData: [], //最近三天天气信息
     nowData: {}, //当前的天气信息
     lifeStyleData: {},
     hasLoadData: false,
@@ -28,7 +28,7 @@ Page({
   onShow: function() {
     this.setData({
       gretting: util.getTimeText() + '好'
-    })
+    });
     this.init();
   },
 
@@ -43,7 +43,7 @@ Page({
   },
 
   // 初始化操作
-  async init(){
+  async init() {
     await this.getLocation();
     this.setData({
       dateMess: util.getDate()
@@ -52,7 +52,7 @@ Page({
   },
 
   // 获取位置信息
-  async getLocation(){
+  async getLocation() {
     if (app.globalData.location) {
       this.setData({
         location: app.globalData.location,
@@ -62,7 +62,7 @@ Page({
     }
 
     await api.getLocation().then((res) => {
-      let { latitude, longitude} = res;
+      let { latitude, longitude } = res;
       // 设置数据
       this.setData({
         location: `${longitude},${latitude}`
@@ -74,14 +74,14 @@ Page({
     }).catch((res) => {
       console.log(res);
       this.setData({
-        locatePlace: '北京市',
-        location: '北京市'
+        locatePlace: config.DEFAULT_PLACE,
+        location: config.DEFAULT_PLACE
       });
     });
   },
 
   // 获取位置信息描述
-  async getLocateName(option){
+  async getLocateName(option) {
     await api.reverseGeocoder(option).then((res) => {
       res = res.address_component;
       this.setData({
@@ -94,7 +94,7 @@ Page({
   },
 
   // 获取天气相关信息
-  async getWeatherData(){
+  async getWeatherData() {
     await api.getWeather({
       location: this.data.location
     }).then((res) => {
@@ -103,7 +103,7 @@ Page({
         hasLoadData: true
       });
       res.HeWeather6 && this.formatData(res.HeWeather6[0]);
-      }).catch((res) => {
+    }).catch((res) => {
       this.stopRefresh();
       console.log(res);
       this.getWeatherData();
@@ -111,7 +111,7 @@ Page({
   },
 
   // 格式化数据为需要的数据类型 
-  formatData(data){
+  formatData(data) {
     this.setBgStyle(+data.now.cond_code);
     this.formatNowData(data);
     this.formHourData(data.hourly);
@@ -120,7 +120,7 @@ Page({
   },
 
   // 格式化当天的数据 
-  formatNowData(data){
+  formatNowData(data) {
     let todayData = data.daily_forecast[0];
     this.setData({
       nowData: {
@@ -129,7 +129,7 @@ Page({
         cond: data.now.cond_txt,
         tmpMin: todayData.tmp_min,
         tmpMax: todayData.tmp_max,
-        sunSet: todayData.ss, 
+        sunSet: todayData.ss,
         sunRaise: todayData.sr,
         pop: `${todayData.pop}%`, // 降雨概率
         hum: `${data.now.hum}%`, // 湿度
@@ -160,7 +160,7 @@ Page({
     });
   },
 
-  formatDayData(data){
+  formatDayData(data) {
     let outData = [];
     data.forEach((item, index) => {
       if (index === 0) {
@@ -185,7 +185,7 @@ Page({
     });
   },
 
-  formHourData(data){
+  formHourData(data) {
     let outData = this.data.hourData;
 
     data.forEach(item => {
@@ -201,23 +201,23 @@ Page({
       hourData: outData
     });
   },
-  
+
   changeLocation() {
     wx.navigateTo({
       url: '../city/city'
     });
   },
 
-  setBgStyle(code){
+  setBgStyle(code) {
     let hour = new Date().getHours(),
-    isDayTime = hour >= 7 && hour <= 18,
-    bgObj = {};
+      isDayTime = hour >= 7 && hour <= 18,
+      bgObj = {};
 
-    if((code >= 100 && code <= 103) || (code >= 200 && code <= 204)){
+    if ((code >= 100 && code <= 103) || (code >= 200 && code <= 204)) {
       bgObj = config.bgColor.sun;
-    }else if(code >= 500 && code <= 515){
+    } else if (code >= 500 && code <= 515) {
       bgObj = config.bgColor.smog;
-    }else{
+    } else {
       bgObj = config.bgColor.rain;
     }
 
@@ -228,7 +228,7 @@ Page({
     this.setBackColor(isDayTime ? bgObj.color : bgObj.colorn);
   },
 
-  setBackColor(color){
+  setBackColor(color) {
     wx.setNavigationBarColor({
       frontColor: '#ffffff',
       backgroundColor: color,

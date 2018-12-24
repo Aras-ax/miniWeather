@@ -2,7 +2,7 @@ const WEATHER_BASE_API = 'https://free-api.heweather.net/s6/weather/';
 const CLOUD_FILE_BASE_PATH = 'https://6d6f-moshang-7c0ba0-1258326249.tcb.qcloud.la/weather/icon/';
 
 module.exports = {
-  DEAULT_PLACE: '北京',
+  DEFAULT_PLACE: '北京市',
   WEATHER_KEY: '',
   MAP_key: '',
   CLOUD_FILE_BASE_PATH: CLOUD_FILE_BASE_PATH,

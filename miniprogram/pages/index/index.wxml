@@ -4,14 +4,15 @@
   <!-- 用户 openid -->
   <view class="userinfo">
     <view class="avatar-bar">
-    <open-data type="userAvatarUrl" class="userinfo-avatar"/>
-    <open-data type="userNickName"/><text class='userinfo-greet'>，{{gretting}}</text>
+      <open-data type="userAvatarUrl" class="userinfo-avatar"/>
+      <open-data type="userNickName"/>
+      <text class='userinfo-greet'>，{{gretting}}</text>
     </view>
   </view>
 
   <!-- 当天信息 -->
   <view class="todayinfo bd-bottom">
-    <view class='info-place' bindtap="changeLocation">{{locatePlace}}</view>
+    <view class='info-place' bindtap="changeLocation">{{locatePlace}}<image class="icon" src="https://6d6f-moshang-7c0ba0-1258326249.tcb.qcloud.la/weather/img/arrow-right.png?sign=44682a61623ec2c5db8ead03208d1d9a&t=1545615137"></image></view>
     <view class='info-cond' bindtap="changeLocation">
       <image class='icon' src="{{nowData.iconUrl}}"/>
       <text>{{nowData.cond}}</text>
