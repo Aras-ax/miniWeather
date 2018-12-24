@@ -2,7 +2,7 @@
 天气预报微信小程序
 
 # 快速体验
-![小程序二维码](./QECode.jpg)
+![小程序二维码](./QRCode.jpg)
 
 # 涉及接口
 腾讯地图API: [`微信小程序JavaScript SDK`](https://lbs.qq.com/qqmap_wx_jssdk/index.html)
