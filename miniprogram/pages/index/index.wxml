@@ -12,7 +12,10 @@
 
   <!-- 当天信息 -->
   <view class="todayinfo bd-bottom">
-    <view class='info-place' bindtap="changeLocation">{{locatePlace}}<image class="icon" src="https://6d6f-moshang-7c0ba0-1258326249.tcb.qcloud.la/weather/img/arrow-right.png?sign=44682a61623ec2c5db8ead03208d1d9a&t=1545615137"></image></view>
+    <view class='info-place flex-row' bindtap="changeLocation">
+      <text>{{locatePlace}}</text>
+      <image class="icon" src="https://6d6f-moshang-7c0ba0-1258326249.tcb.qcloud.la/weather/img/arrow-right.png?sign=44682a61623ec2c5db8ead03208d1d9a&t=1545615137"></image>
+      </view>
     <view class='info-cond' bindtap="changeLocation">
       <image class='icon' src="{{nowData.iconUrl}}"/>
       <text>{{nowData.cond}}</text>
@@ -23,7 +26,7 @@
     </view>
     <view class='info-bottom flex-row'>
       <text class='info-bt-week'>{{dateMess.weekDay}}</text>
-      <view class='info-bt-temp'>
+      <view class='info-bt-temp flex-row'>
         <text class='info-bt-up'>{{nowData.tmpMax}}</text>
         <text class='info-bt-down'>{{nowData.tmpMin}}</text>
       </view>
@@ -46,23 +49,25 @@
   </scroll-view>
 
   <!-- 近六天天气信息 -->
-  <scroll-view scroll-x class="dayinfo bd-bottom">
+  <view class="dayinfo">
     <view hidden="{{hasLoadData}}">
       <view class="center">近几天天气信息加载中···</view>
     </view>
-    <view hidden="{{!hasLoadData}}" class="flex-row day-container">
-      <view hidden="{{!hasLoadData}}" wx:for="{{dayData}}" wx:key="item.date" class='day-item'>
-        <view>{{item.weekDay}}</view>
-        <view>{{item.date}}</view>
-        <view>日出{{item.sunRaise}}</view>
-        <view><image class='icon' src="{{item.condDay}}"></image></view>
-        <view>{{item.tmp}}</view>
-        <view><image class='icon' src="{{item.condNight}}"></image></view>
-        <view>日落{{item.sunSet}}</view>
-        <view>风速{{item.wind}}级</view>
+    <view hidden="{{!hasLoadData}}" class="day-container">
+      <view hidden="{{!hasLoadData}}" wx:for="{{dayData}}" wx:key="item.date" class='day-item flex-row bd-bottom'>
+        <view class="day-left">{{item.weekDay}}</view>
+        <view class="day-center">
+          <image class='icon' src="{{item.condDay}}"></image> ~
+          <image class='icon' src="{{item.condNight}}"></image>
+        </view>
+        <view class="day-right flex-row">
+          <text class="align-right">{{item.tmpMax}}</text>
+          <text class="align-centex"> ~ </text>
+          <text class="align-right">{{item.tmpMin}}</text>
+        </view>
       </view>
     </view>
-  </scroll-view>
+  </view>
   
   <!-- 其他辅助信息 -->
   <view class="otherinfo">

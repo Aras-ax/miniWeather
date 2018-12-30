@@ -127,9 +127,9 @@ Page({
         tmp: data.now.tmp, //当前温度
         iconUrl: `${config.CLOUD_FILE_BASE_PATH}${data.now.cond_code}.png`,
         cond: data.now.cond_txt,
-        tmpMin: todayData.tmp_min,
-        tmpMax: todayData.tmp_max,
-        sunSet: todayData.ss,
+        tmpMin: `${todayData.tmp_min}°`,
+        tmpMax: `${todayData.tmp_max}°`,
+        sunSet: todayData.ss, 
         sunRaise: todayData.sr,
         pop: `${todayData.pop}%`, // 降雨概率
         hum: `${data.now.hum}%`, // 湿度
@@ -171,12 +171,14 @@ Page({
       outData.push({
         weekDay: dateObj.weekDay,
         date: dateObj.date,
-        sunRaise: `${item.sr}`,
-        sunSet: `${item.ss}`,
-        tmp: `${item.tmp_min}°~${item.tmp_max}°`,
+        // sunRaise: `${item.sr}`,
+        // sunSet: `${item.ss}`,
+        // tmp: `${item.tmp_min}°~${item.tmp_max}°`,
+        tmpMin: `${item.tmp_min}°`,
+        tmpMax: `${item.tmp_max}°`,
         condDay: `${config.CLOUD_FILE_BASE_PATH}${item.cond_code_d}.png`,
-        condNight: `${config.CLOUD_FILE_BASE_PATH}${item.cond_code_n}.png`,
-        wind: `${item.wind_sc}`
+        condNight: `${config.CLOUD_FILE_BASE_PATH}${item.cond_code_n}.png`
+        // wind: `${item.wind_sc}`
       });
     });
 

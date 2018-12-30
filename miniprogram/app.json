@@ -10,5 +10,10 @@
     "navigationBarTitleText": "天气大侠",
     "navigationBarTextStyle": "black",
     "enablePullDownRefresh": true
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "获取当地的天气信息"
+    }
   }
 }

@@ -68,7 +68,8 @@ overflow:hidden;
 
 .info-place{
   font-size: 56rpx;
-  padding: 14rpx 0 0;
+  padding:14rpx 0 14rpx 24rpx;
+  justify-content:center;
 }
 
 .info-temp{
@@ -99,16 +100,17 @@ overflow:hidden;
 .info-bt-week{
   flex-grow:1;
   padding-left: 40rpx;
+
 }
 
 .info-bt-temp{
-  width: 140rpx;
+  width: 120rpx;
   padding-right: 40rpx;
+  justify-content:space-between;
 }
 
 
 .info-bt-down{
-  float: right;
   color: rgba(255, 255, 255, .5);
 }
 
@@ -129,15 +131,23 @@ overflow:hidden;
   flex: 1;
 }
 
-
-.day-container{
-  padding: 12rpx 15rpx;
-  width: 1100rpx;
+.day-item{
+  padding: 0 40rpx;
   box-sizing: border-box;
+  height: 40px;
+  align-items: center;
 }
 
-.day-item{
-  width: 250rpx;
+.day-right{
+  width: 140prpx;
+}
+
+.day-center{
+  flex-grow: 1;
+}
+
+.day-right text{
+  min-width: 40rpx;
 }
 
 /** 其他信息 **/

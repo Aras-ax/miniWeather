@@ -44,6 +44,14 @@ page{
   padding: 48rpx 0;
 }
 
+.align-center{
+  text-align: center;
+}
+
+.align-right{
+  text-align: right;
+}
+
 /* 不同天气不同背景色 */
 /* 晴 */
 .sunshine {
