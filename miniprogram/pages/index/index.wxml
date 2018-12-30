@@ -92,7 +92,7 @@
 
   <!-- 版权信息 -->
   <view class='footer'>
-  ©2018 陌上 & API 和风天气
+  ©{{dateMess.year}} 陌上 & API 和风天气
   </view>
 
 </view>

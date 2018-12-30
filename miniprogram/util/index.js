@@ -29,9 +29,16 @@ function getWeekDay(date){
 function getDate(date) {
   date = transDate(date);
   return {
+    year: date.getFullYear(),
+    dayTime: `${formatTime(date.getHours())}:${formatTime(date.getMinutes())}`,
     weekDay: `星期${WEEK_DAY[date.getDay()]}`,
     date: `${date.getDate()}/${date.getMonth() + 1}`
   };
+}
+
+function formatTime(t){
+  t = '0' + t;
+  return t.slice(-2);
 }
 
 function getHour(date){

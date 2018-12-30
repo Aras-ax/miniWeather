@@ -112,8 +112,8 @@ Page({
 
   // 格式化数据为需要的数据类型 
   formatData(data) {
-    this.setBgStyle(+data.now.cond_code);
     this.formatNowData(data);
+    this.setBgStyle(+data.now.cond_code);
     this.formHourData(data.hourly);
     this.formatLifeStyle(data.lifestyle);
     this.formatDayData(data.daily_forecast);
@@ -171,14 +171,10 @@ Page({
       outData.push({
         weekDay: dateObj.weekDay,
         date: dateObj.date,
-        // sunRaise: `${item.sr}`,
-        // sunSet: `${item.ss}`,
-        // tmp: `${item.tmp_min}°~${item.tmp_max}°`,
         tmpMin: `${item.tmp_min}°`,
         tmpMax: `${item.tmp_max}°`,
         condDay: `${config.CLOUD_FILE_BASE_PATH}${item.cond_code_d}.png`,
         condNight: `${config.CLOUD_FILE_BASE_PATH}${item.cond_code_n}.png`
-        // wind: `${item.wind_sc}`
       });
     });
 
@@ -211,8 +207,9 @@ Page({
   },
 
   setBgStyle(code) {
-    let hour = new Date().getHours(),
-      isDayTime = hour >= 7 && hour <= 18,
+    let nowData = this.data.nowData,
+      dateMess = this.data.dateMess,
+      isDayTime = nowData.sunRaise <= dateMess.dayTime && dateMess.dayTime <= nowData.sunSet,
       bgObj = {};
 
     if ((code >= 100 && code <= 103) || (code >= 200 && code <= 204)) {

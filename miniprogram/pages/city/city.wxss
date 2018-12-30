@@ -17,7 +17,7 @@ page {
   color: #333;
   font-size: 32prx;
 }
-
+ 
 .font-light{
   color: #7f7f7f; 
   font-size: 28rpx;
@@ -130,7 +130,7 @@ page {
   line-height: 88rpx;
   padding-left: 24rpx;
   height: 88rpx;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1rpx solid #eee;
   box-sizing: border-box;
 }
 
@@ -165,7 +165,7 @@ page {
 
 .search-item{
   height: 120rpx;
-  border-bottom: 1px solid #ececec;
+  border-bottom: 1rpx solid #ececec;
   box-sizing: border-box;
   position: relative;
   text-align: left;

@@ -1,7 +1,7 @@
 /**index.wxss**/
 
 page {
-background-attachment: fixed;
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -54,7 +54,7 @@ overflow:hidden;
 }
 
 .bd-bottom{
-  border-bottom: 1px solid rgba(255, 255, 255, .5);
+  border-bottom: 1rpx solid rgba(255, 255, 255, .5);
 }
 /** 当天信息 **/
 .todayinfo{
@@ -157,7 +157,7 @@ overflow:hidden;
 }
 
 .info-other{
-  border-top: 1px solid rgba(255, 255, 255, .5);
+  border-top: 1rpx solid rgba(255, 255, 255, .5);
   padding: 0 40rpx;
 }
 
@@ -166,7 +166,11 @@ overflow:hidden;
   display:inline-block;
   padding: 4rpx;
   box-sizing: border-box;
-  border-bottom: 1px solid rgba(255, 255, 255, .5);
+  border-bottom: 1rpx solid rgba(255, 255, 255, .5);
+}
+
+.info-other-item:last-child{
+  border-bottom: 0;
 }
 
 .info-other-item.max{
@@ -189,12 +193,11 @@ overflow:hidden;
 
 .footer{
   height:60rpx;
-  margin-top: -1px;
   line-height:60rpx;
   font-size:20rpx;
   position: relative;
   z-index: 11;
   text-align:center;
   color:#fff;
-  border-top: 1px solid rgba(255, 255, 255, .5);
+  border-top: 1rpx solid rgba(255, 255, 255, .5);
 }
