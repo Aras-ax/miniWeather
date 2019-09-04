@@ -15,5 +15,6 @@
     "scope.userLocation": {
       "desc": "获取当地的天气信息"
     }
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
